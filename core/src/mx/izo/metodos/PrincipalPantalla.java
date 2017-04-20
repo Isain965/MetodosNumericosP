@@ -27,40 +27,6 @@ public class PrincipalPantalla implements Screen {
 
     // Objeto para dibujar en la pantalla
     private SpriteBatch batch;
-
-
-
-    // Opciones
-    private Texture texturaRegresar;
-    private Boton btnRegresar;
-
-    private Texture texturaTec;
-    private Boton btnTec;
-
-    private float tiempoJuego=0;
-
-    //Botones de la historia
-    private Texture texturaHistoria1;
-    private Texture texturaHistoria2;
-    private Texture texturaHistoria3;
-    private Texture texturaHistoria4;
-    private Texture texturaHistoria5;
-    private Texture texturaHistoria6;
-    private Texture texturaHistoria7;
-    private Texture texturaMenu;
-    private Boton btnHistoria1;
-    private Boton btnHistoria2;
-    private Boton btnHistoria3;
-    private Boton btnHistoria4;
-    private Boton btnHistoria5;
-    private Boton btnHistoria6;
-    private Boton btnHistoria7;
-    private Boton btnMenu;
-
-
-    //Musica de fondo
-    private Music musicFondo;
-
     private EstadosPantalla estadoPantalla;
 
 
@@ -98,60 +64,18 @@ public class PrincipalPantalla implements Screen {
         // Cargar las texturas/mapas
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
 
-        assetManager.load("PantallaDeInicio.png", Texture.class);    // Cargar imagen
+       // assetManager.load("PantallaDeInicio.png", Texture.class);    // Cargar imagen
         // Texturas de los botones
 
-        assetManager.load("LogoTec.JPG",Texture.class);
-
-        //Recuersos para la historia
-        assetManager.load("Historia1.jpg",Texture.class);
-        assetManager.load("Historia2.jpg",Texture.class);
-        assetManager.load("Historia3.jpg",Texture.class);
-        assetManager.load("Historia4.jpg",Texture.class);
-        assetManager.load("Historia5.jpg",Texture.class);
-        assetManager.load("Historia6.jpg",Texture.class);
-        assetManager.load("Historia7.jpg",Texture.class);
-        assetManager.load("back.png",Texture.class);
+        //assetManager.load("LogoTec.JPG",Texture.class);
 
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
     }
 
     private void crearObjetos() {
-        AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
-        // Carga el mapa en memoria
-        texturaRegresar = assetManager.get("PantallaDeInicio.png");
+        //AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
 
-        texturaTec = assetManager.get("LogoTec.JPG");
-
-
-        btnRegresar = new Boton(texturaRegresar);
-
-        btnTec = new Boton(texturaTec);
-
-        //Botones de historia
-        texturaHistoria1 = assetManager.get("Historia1.jpg");
-        texturaHistoria2 = assetManager.get("Historia2.jpg");
-        texturaHistoria3 = assetManager.get("Historia3.jpg");
-        texturaHistoria4 = assetManager.get("Historia4.jpg");
-        texturaHistoria5 = assetManager.get("Historia5.jpg");
-        texturaHistoria6 = assetManager.get("Historia6.jpg");
-        texturaHistoria7 = assetManager.get("Historia7.jpg");
-        texturaMenu = assetManager.get("back.png");
-        btnHistoria1 = new Boton(texturaHistoria1);
-        btnHistoria2 = new Boton(texturaHistoria2);
-        btnHistoria3 = new Boton(texturaHistoria3);
-        btnHistoria4 = new Boton(texturaHistoria4);
-        btnHistoria5 = new Boton(texturaHistoria5);
-        btnHistoria6 = new Boton(texturaHistoria6);
-        btnHistoria7 = new Boton(texturaHistoria7);
-        btnMenu = new Boton(texturaMenu);
-        btnMenu.setPosicion(10,10);
-
-        //Musica de fondo
-        musicFondo = Gdx.audio.newMusic(Gdx.files.internal("Principal.mp3"));
-        musicFondo.setLooping(true);
-        musicFondo.play();
     }
 
     /*
@@ -168,41 +92,8 @@ public class PrincipalPantalla implements Screen {
 
         // Entre begin-end dibujamos nuestros objetos en pantalla
         batch.begin();
-
-        tiempoJuego += Gdx.graphics.getDeltaTime();
-
-
-        if(estadoPantalla == EstadosPantalla.INICIANDO) {
-            if ((int) tiempoJuego < 2) {
-                btnTec.render(batch);
-            } else {
-                btnRegresar.render(batch);
-            }
-        }else if(estadoPantalla == EstadosPantalla.HISTORIA1){
-            btnHistoria1.render(batch);
-            btnMenu.render(batch);
-        }else if(estadoPantalla == EstadosPantalla.HISTORIA2){
-            btnHistoria2.render(batch);
-            btnMenu.render(batch);
-        }else if(estadoPantalla == EstadosPantalla.HISTORIA3){
-            btnHistoria3.render(batch);
-            btnMenu.render(batch);
-        }else if(estadoPantalla == EstadosPantalla.HISTORIA4){
-            btnHistoria4.render(batch);
-            btnMenu.render(batch);
-        }else if(estadoPantalla == EstadosPantalla.HISTORIA5){
-            btnHistoria5.render(batch);
-            btnMenu.render(batch);
-        }else if(estadoPantalla == EstadosPantalla.HISTORIA6){
-            btnHistoria6.render(batch);
-            btnMenu.render(batch);
-        }else if(estadoPantalla == EstadosPantalla.HISTORIA7){
-            btnHistoria7.render(batch);
-            btnMenu.render(batch);
-        }else if(estadoPantalla == EstadosPantalla.FINALIZANDO){
-            btnRegresar.render(batch);
-        }
         batch.end();
+
     }
 
     private void borrarPantalla() {
@@ -235,8 +126,8 @@ public class PrincipalPantalla implements Screen {
     public void dispose() {
         // Los assets se liberan a través del assetManager
         AssetManager assetManager = plataforma.getAssetManager();
-        assetManager.unload("PantallaDeInicio.png");
-        assetManager.unload("LogoTec.JPG");
+       // assetManager.unload("PantallaDeInicio.png");
+       // assetManager.unload("LogoTec.JPG");
 //        efecto.dispose();
 //        explosion.dispose();
     }
@@ -261,30 +152,6 @@ public class PrincipalPantalla implements Screen {
                 if(estadoPantalla == EstadosPantalla.INICIANDO) {
                     System.exit(0);
                 }
-                else if(estadoPantalla == EstadosPantalla.HISTORIA1) {
-                    estadoPantalla = EstadosPantalla.INICIANDO;
-                }
-                else if(estadoPantalla == EstadosPantalla.HISTORIA2) {
-                    estadoPantalla = EstadosPantalla.HISTORIA1;
-                }
-                else if(estadoPantalla == EstadosPantalla.HISTORIA3) {
-                    estadoPantalla = EstadosPantalla.HISTORIA2;
-                }
-                else if(estadoPantalla == EstadosPantalla.HISTORIA4) {
-                    estadoPantalla = EstadosPantalla.HISTORIA3;
-                }
-                else if(estadoPantalla == EstadosPantalla.HISTORIA5) {
-                    estadoPantalla = EstadosPantalla.HISTORIA4;
-                }
-                else if(estadoPantalla == EstadosPantalla.HISTORIA6) {
-                    estadoPantalla = EstadosPantalla.HISTORIA5;
-                }
-                else if(estadoPantalla == EstadosPantalla.HISTORIA7) {
-                    estadoPantalla = EstadosPantalla.HISTORIA6;
-                }
-                else if(estadoPantalla == EstadosPantalla.FINALIZANDO) {
-                    estadoPantalla = EstadosPantalla.HISTORIA7;
-                }
             }
             return true; // Para que el sistema operativo no la procese
         }
@@ -301,87 +168,9 @@ public class PrincipalPantalla implements Screen {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if(estadoPantalla == EstadosPantalla.INICIANDO){
-                if (btnRegresar.contiene(x,y)&&tiempoJuego>2.5){
-                    estadoPantalla=EstadosPantalla.HISTORIA1;
-                }
-            }else if(estadoPantalla == EstadosPantalla.HISTORIA1){
-                if (btnHistoria1.contiene(x,y)){
-                    estadoPantalla=EstadosPantalla.HISTORIA2;
-                }
-                if(btnMenu.contiene(x,y)){
-                    musicFondo.stop();
-                    musicFondo.dispose();
-                    Gdx.input.setInputProcessor(null);
-                    plataforma.setScreen(new PrincipalPantalla(plataforma));
-                }
-            }
-            else if(estadoPantalla == EstadosPantalla.HISTORIA2){
-                if (btnHistoria2.contiene(x,y)){
-                    estadoPantalla=EstadosPantalla.HISTORIA3;
-                }
-                if(btnMenu.contiene(x,y)){
-                    musicFondo.stop();
-                    musicFondo.dispose();
-                    Gdx.input.setInputProcessor(null);
-                    plataforma.setScreen(new PrincipalPantalla(plataforma));
-                }
-            }else if(estadoPantalla == EstadosPantalla.HISTORIA3){
-                if (btnHistoria3.contiene(x,y)){
-                    estadoPantalla=EstadosPantalla.HISTORIA4;
-                }
-                if(btnMenu.contiene(x,y)){
-                    musicFondo.stop();
-                    musicFondo.dispose();
-                    Gdx.input.setInputProcessor(null);
-                    plataforma.setScreen(new PrincipalPantalla(plataforma));
-                }
-            }else if(estadoPantalla == EstadosPantalla.HISTORIA4){
-                if (btnHistoria4.contiene(x,y)){
-                    estadoPantalla=EstadosPantalla.HISTORIA5;
-                }
-                if(btnMenu.contiene(x,y)){
-                    musicFondo.stop();
-                    musicFondo.dispose();
-                    Gdx.input.setInputProcessor(null);
-                    plataforma.setScreen(new PrincipalPantalla(plataforma));
-                }
-            }else if(estadoPantalla == EstadosPantalla.HISTORIA5){
-                if (btnHistoria5.contiene(x,y)){
-                    estadoPantalla=EstadosPantalla.HISTORIA6;
-                }
-                if(btnMenu.contiene(x,y)){
-                    musicFondo.stop();
-                    musicFondo.dispose();
-                    Gdx.input.setInputProcessor(null);
-                    plataforma.setScreen(new PrincipalPantalla(plataforma));
-                }
-            }else if(estadoPantalla == EstadosPantalla.HISTORIA6){
-                if (btnHistoria6.contiene(x,y)){
-                    estadoPantalla=EstadosPantalla.HISTORIA7;
-                }
-                if(btnMenu.contiene(x,y)){
-                    musicFondo.stop();
-                    musicFondo.dispose();
-                    Gdx.input.setInputProcessor(null);
-                    plataforma.setScreen(new PrincipalPantalla(plataforma));
-                }
-            }else if(estadoPantalla == EstadosPantalla.HISTORIA7){
-                if (btnHistoria7.contiene(x,y)){
-                    estadoPantalla = EstadosPantalla.FINALIZANDO;
-                }
-                if(btnMenu.contiene(x,y)){
-                    musicFondo.stop();
-                    musicFondo.dispose();
-                    Gdx.input.setInputProcessor(null);
-                    plataforma.setScreen(new PrincipalPantalla(plataforma));
-                }
+
             }else if (estadoPantalla == EstadosPantalla.FINALIZANDO){
-                if(btnRegresar.contiene(x,y)){
-                    musicFondo.stop();
-                    musicFondo.dispose();
-                    Gdx.input.setInputProcessor(null);
-                    plataforma.setScreen(new PrincipalPantalla(plataforma));
-                }
+
             }
             return true;    // Indica que ya procesó el evento
         }
@@ -407,13 +196,6 @@ public class PrincipalPantalla implements Screen {
 
     public enum EstadosPantalla {
         INICIANDO,
-        HISTORIA1,
-        HISTORIA2,
-        HISTORIA3,
-        HISTORIA4,
-        HISTORIA5,
-        HISTORIA6,
-        HISTORIA7,
         FINALIZANDO
     }
 }
