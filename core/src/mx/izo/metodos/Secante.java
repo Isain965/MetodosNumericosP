@@ -55,6 +55,7 @@ public class Secante implements Screen {
     double fx0 = 0;
     double fx1 = 0;
     boolean datosCompletados=false;
+    boolean procesamientoCompletado = false;
 
 
 
@@ -276,6 +277,7 @@ public class Secante implements Screen {
                 fx0 = 0;
                 fx1 = 0;
             }
+            procesamientoCompletado = true;
             Gdx.app.log("La raiz es: " ,String.valueOf(x2));
         }
     }
@@ -312,6 +314,9 @@ public class Secante implements Screen {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if(btnInsertarDatos.contiene(x,y)){
+                if(procesamientoCompletado){
+                    plataforma.setScreen(new Menu(plataforma));
+                }
                 banderaDatos = true;
             }
             return true;    // Indica que ya procesó el evento
