@@ -7,15 +7,19 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+
 /**
  * Created by isain on 10/11/2016.
  */
-public class PrincipalPantalla implements Screen {
+
+public class Menu implements Screen {
     // Referencia al objeto de tipo Game (tiene setScreen para cambiar de pantalla)
     private Plataforma plataforma;
 
@@ -25,16 +29,18 @@ public class PrincipalPantalla implements Screen {
 
     // Objeto para dibujar en la pantalla
     private SpriteBatch batch;
-    private EstadosPantalla estadoPantalla;
+
+    //Texura para los botones
+    Texture texturaBtnSecante;
+    Boton btnSecante;
 
 
-    public PrincipalPantalla(Plataforma plataforma) {
+    /*asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss*/
+    public Menu(Plataforma plataforma) {
         this.plataforma = plataforma;
     }
 
-    /*
-    Se ejecuta al mostrar este Screen como pantalla de la app
-     */
+    /* Se ejecuta al mostrar este Screen como pantalla de la app */
     @Override
     public void show() {
         // Crea la cámara/vista
@@ -52,8 +58,6 @@ public class PrincipalPantalla implements Screen {
 
         // Tecla BACK (Android)
         Gdx.input.setCatchBackKey(true);
-
-        estadoPantalla = EstadosPantalla.INICIANDO;
     }
 
     // Carga los recursos a través del administrador de assets
@@ -62,18 +66,18 @@ public class PrincipalPantalla implements Screen {
         // Cargar las texturas/mapas
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
 
-       // assetManager.load("PantallaDeInicio.png", Texture.class);    // Cargar imagen
         // Texturas de los botones
-
-        //assetManager.load("LogoTec.JPG",Texture.class);
+        assetManager.load("BtmOk.png", Texture.class);    // Cargar imagen
 
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
     }
 
     private void crearObjetos() {
-        //AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
-
+        AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
+        texturaBtnSecante=assetManager.get("BtmOk.png");
+        btnSecante = new Boton(texturaBtnSecante);
+        btnSecante.setPosicion(Plataforma.ANCHO_CAMARA/2,Plataforma.ALTO_CAMARA/2);
     }
 
     /*
@@ -88,16 +92,17 @@ public class PrincipalPantalla implements Screen {
 
         batch.setProjectionMatrix(camara.combined);
 
+
         // Entre begin-end dibujamos nuestros objetos en pantalla
         batch.begin();
-
+        btnSecante.render(batch);
 
         batch.end();
 
     }
 
     private void borrarPantalla() {
-        Gdx.gl.glClearColor(0, 0, 1, 1);    // r, g, b, alpha
+        Gdx.gl.glClearColor(0.5f, 0.3f, 0, 1);    // r, g, b, alpha
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
@@ -126,11 +131,14 @@ public class PrincipalPantalla implements Screen {
     public void dispose() {
         // Los assets se liberan a través del assetManager
         AssetManager assetManager = plataforma.getAssetManager();
-       // assetManager.unload("PantallaDeInicio.png");
-       // assetManager.unload("LogoTec.JPG");
-//        efecto.dispose();
-//        explosion.dispose();
+        //assetManager.unload("PantallaDeInicio.png");
+        //assetManager.unload("LogoTec.JPG");
+        //efecto.dispose();
+        //explosion.dispose();
     }
+
+
+
 
     /*
     Clase utilizada para manejar los eventos de touch en la pantalla
@@ -139,6 +147,7 @@ public class PrincipalPantalla implements Screen {
     {
         private Vector3 coordenadas = new Vector3();
         private float x, y;     // Las coordenadas en la pantalla
+        private String message;
 
         /*
         Se ejecuta cuando el usuario PONE un dedo sobre la pantalla, los dos primeros parámetros
@@ -148,11 +157,6 @@ public class PrincipalPantalla implements Screen {
          */
         @Override
         public boolean keyDown(int keycode) {
-            if (keycode== Input.Keys.BACK) {
-                if(estadoPantalla == EstadosPantalla.INICIANDO) {
-                    System.exit(0);
-                }
-            }
             return true; // Para que el sistema operativo no la procese
         }
         @Override
@@ -167,23 +171,16 @@ public class PrincipalPantalla implements Screen {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
-            if(estadoPantalla == EstadosPantalla.INICIANDO){
-
-            }else if (estadoPantalla == EstadosPantalla.FINALIZANDO){
-
+            if(btnSecante.contiene(x,y)){
+                plataforma.setScreen(new Secante(plataforma));
             }
             return true;    // Indica que ya procesó el evento
         }
-
-
         // Se ejecuta cuando el usuario MUEVE el dedo sobre la pantalla
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-
             return true;
         }
-
-
         private void transformarCoordenadas(int screenX, int screenY) {
             // Transformar las coordenadas de la pantalla física a la cámara HUD
             coordenadas.set(screenX, screenY, 0);
@@ -192,10 +189,7 @@ public class PrincipalPantalla implements Screen {
             x = coordenadas.x;
             y = coordenadas.y;
         }
-    }
 
-    public enum EstadosPantalla {
-        INICIANDO,
-        FINALIZANDO
     }
 }
+
