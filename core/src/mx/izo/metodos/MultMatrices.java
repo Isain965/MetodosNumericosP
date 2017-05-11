@@ -207,13 +207,24 @@ public class MultMatrices implements Screen {
             multiplicacion();
         }
         if(resultados){
-            int des = 0;
-            for (int x=0; x < resultado.length; x++) {
+
+            int espacio = (int)((Plataforma.ANCHO_CAMARA/col_m2)/2);
+            int cont = 100;
+            texto.mostrarMensaje(batch,"Resultados",Plataforma.ANCHO_CAMARA/2 - espacio,(Plataforma.ALTO_CAMARA-cont));
+
+            /*for (int x=0; x < resultado.length; x++) {
                 for (int y = 0; y < resultado[x].length; y++) {
-                    texto.mostrarMensaje(batch,String.valueOf(resultado[x][y]),((Plataforma.ANCHO_CAMARA/4)+(des*40)) ,(Plataforma.ALTO_CAMARA/2)-(65*x));
-                    des=des+5;
+                    texto.mostrarMensaje(batch,String.valueOf(resultado[x][y]),((Plataforma.ANCHO_CAMARA/4)) ,(Plataforma.ALTO_CAMARA/2)-(65*x));
                 }
-                des=0;
+            }*/
+            int espaciotemporal=espacio;
+            for (int x=0; x < resultado.length; x++) {
+                cont +=100;
+                for (int y = 0; y < resultado[x].length; y++) {
+                    texto.mostrarMensaje(batch, String.valueOf(resultado[x][y]), espaciotemporal, (Plataforma.ALTO_CAMARA) - cont);
+                    espaciotemporal = espacio + espaciotemporal;
+                }
+                espaciotemporal=espacio;
             }
         }
         //Imprimir matriz 1
@@ -369,6 +380,7 @@ public class MultMatrices implements Screen {
                     Gdx.app.log(String.valueOf(resultado[x][y]), " ");
                 }
             }
+            btnInsertarDatos.setPosicion(Plataforma.ANCHO_CAMARA-200,50);
             datosCompletados1=false;
             datosCompletados2=false;
         }

@@ -57,6 +57,10 @@ public class Secante implements Screen {
     boolean datosCompletados=false;
     boolean procesamientoCompletado = false;
 
+    //Para el texto
+    private Texto texto;
+    boolean resultados = false;
+
 
 
     /*asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss*/
@@ -82,6 +86,8 @@ public class Secante implements Screen {
 
         // Tecla BACK (Android)
         Gdx.input.setCatchBackKey(true);
+
+        texto=new Texto();
     }
 
     // Carga los recursos a través del administrador de assets
@@ -123,7 +129,11 @@ public class Secante implements Screen {
         if(banderaDatos){
             secante();
         }
+        if(procesamientoCompletado){
+            texto.mostrarMensaje(batch,"Resultados",Plataforma.ANCHO_CAMARA/2-30,(Plataforma.ALTO_CAMARA-100));
+            texto.mostrarMensaje(batch,String.valueOf(x2),(Plataforma.ANCHO_CAMARA/2),Plataforma.ALTO_CAMARA/2);
 
+        }
 
         batch.end();
 
@@ -278,6 +288,7 @@ public class Secante implements Screen {
                 fx1 = 0;
             }
             procesamientoCompletado = true;
+            btnInsertarDatos.setPosicion(Plataforma.ANCHO_CAMARA-200,50);
             Gdx.app.log("La raiz es: " ,String.valueOf(x2));
         }
     }

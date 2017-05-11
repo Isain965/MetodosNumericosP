@@ -146,6 +146,7 @@ public class Gauss implements Screen {
         }
         if(resultados){
             for (int i = 0; i < numeroEcuaciones; i++) {
+                texto.mostrarMensaje(batch,"Resultados",Plataforma.ANCHO_CAMARA/2-30,(Plataforma.ALTO_CAMARA-100));
                 texto.mostrarMensaje(batch,("x"+i+" = ")+(x[i]),(Plataforma.ANCHO_CAMARA/2),(Plataforma.ALTO_CAMARA/2)-(65*i));
             }
         }
@@ -283,6 +284,7 @@ public class Gauss implements Screen {
             }
             resultados = true;
             volver=true;
+            btnInsertarDatos.setPosicion(Plataforma.ANCHO_CAMARA-200,50);
         }
     }
     private final double EPSILON = 1e-10;

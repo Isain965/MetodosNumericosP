@@ -133,6 +133,7 @@ public class Biseccion implements Screen {
             biseccion();
         }
         if(resultados){
+            texto.mostrarMensaje(batch,"Resultados",Plataforma.ANCHO_CAMARA/2-30,(Plataforma.ALTO_CAMARA-100));
             texto.mostrarMensaje(batch,String.valueOf(x),(Plataforma.ANCHO_CAMARA/2),Plataforma.ALTO_CAMARA/2);
         }
 
@@ -294,6 +295,7 @@ public class Biseccion implements Screen {
 
             }
             procesamientoCompletado = true;
+            btnInsertarDatos.setPosicion(Plataforma.ANCHO_CAMARA-200,50);
             resultados=true;
             Gdx.app.log("La raiz es: " ,String.valueOf(x));
         }

@@ -210,16 +210,26 @@ public class SumMatrices implements Screen {
             multiplicacion();
         }
         if(resultados){
-            //resultados = false;
-            //Imprimir matriz
-            for (int x=0; x < sumaM.length; x++) {
-                for (int y = 0; y < sumaM[x].length; y++) {
-                    texto.mostrarMensaje(batch,String.valueOf(sumaM[x][y])+ "         ",(Plataforma.ANCHO_CAMARA/2)+(y*65),(Plataforma.ALTO_CAMARA/2)-(65*x));
+
+            int espacio = (int)((Plataforma.ANCHO_CAMARA/col_m2)/2);
+            int cont = 100;
+            texto.mostrarMensaje(batch,"Resultados",Plataforma.ANCHO_CAMARA/2 - espacio,(Plataforma.ALTO_CAMARA-cont));
+
+            /*for (int x=0; x < resultado.length; x++) {
+                for (int y = 0; y < resultado[x].length; y++) {
+                    texto.mostrarMensaje(batch,String.valueOf(resultado[x][y]),((Plataforma.ANCHO_CAMARA/4)) ,(Plataforma.ALTO_CAMARA/2)-(65*x));
                 }
+            }*/
+            int espaciotemporal=espacio;
+            for (int x=0; x < sumaM.length; x++) {
+                cont +=100;
+                for (int y = 0; y < sumaM[x].length; y++) {
+                    texto.mostrarMensaje(batch, String.valueOf(sumaM[x][y]), espaciotemporal, (Plataforma.ALTO_CAMARA) - cont);
+                    espaciotemporal = espacio + espaciotemporal;
+                }
+                espaciotemporal=espacio;
             }
-            System.out.println("En render");
         }
-        //Imprimir matriz 1
 
         batch.end();
 
@@ -381,6 +391,7 @@ public class SumMatrices implements Screen {
             datosCompletados1=false;
             datosCompletados2=false;
             resultados = true;
+            btnInsertarDatos.setPosicion(Plataforma.ANCHO_CAMARA-300,50);
         }
 
 

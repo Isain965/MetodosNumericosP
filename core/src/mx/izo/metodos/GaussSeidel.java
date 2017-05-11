@@ -140,6 +140,7 @@ public class GaussSeidel implements Screen {
         }
         if(resultados){
             for (int i = 0; i < aproximaciones.size(); i++) {
+                texto.mostrarMensaje(batch,"Resultados",Plataforma.ANCHO_CAMARA/2-30,(Plataforma.ALTO_CAMARA-100));
                 texto.mostrarMensaje(batch,("x" + i + " = ") + aproximaciones.get(i),(Plataforma.ANCHO_CAMARA/2),(Plataforma.ALTO_CAMARA/2)-(65*i));
             }
         }
@@ -302,6 +303,7 @@ public class GaussSeidel implements Screen {
             }
             resultados=true;
             volver=true;
+            btnInsertarDatos.setPosicion(Plataforma.ANCHO_CAMARA-200,50);
         }
         /* Desplegamos resultados
         System.out.println("\nResultados");
