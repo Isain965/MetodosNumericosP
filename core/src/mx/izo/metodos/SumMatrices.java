@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -76,6 +80,10 @@ public class SumMatrices implements Screen {
 
     boolean pinchesBandera=false;
 
+    boolean resultados = false;
+
+    //Para el texto
+    private Texto texto;
 
 
 
@@ -91,7 +99,7 @@ public class SumMatrices implements Screen {
         camara = new OrthographicCamera(Plataforma.ANCHO_CAMARA, Plataforma.ALTO_CAMARA);
         camara.position.set(Plataforma.ANCHO_CAMARA / 2, Plataforma.ALTO_CAMARA / 2, 0);
         camara.update();
-        vista = new StretchViewport(Plataforma.ANCHO_CAMARA, Plataforma.ALTO_CAMARA, camara);
+        vista = new FillViewport(Plataforma.ANCHO_CAMARA, Plataforma.ALTO_CAMARA, camara);
 
         batch = new SpriteBatch();
 
@@ -99,6 +107,8 @@ public class SumMatrices implements Screen {
         crearObjetos();
 
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
+
+        texto = new Texto();
 
         // Tecla BACK (Android)
         Gdx.input.setCatchBackKey(true);
@@ -133,7 +143,7 @@ public class SumMatrices implements Screen {
             }
             @Override
             public void canceled() {
-
+                plataforma.setScreen(new Menu(plataforma));
             }
         };
         Gdx.input.getTextInput(listener3, "Columnas M2 ", "", "");
@@ -146,7 +156,7 @@ public class SumMatrices implements Screen {
             }
             @Override
             public void canceled() {
-
+                plataforma.setScreen(new Menu(plataforma));
             }
         };
         Gdx.input.getTextInput(listener4, "Filas M2 ", "", "");
@@ -159,7 +169,7 @@ public class SumMatrices implements Screen {
             }
             @Override
             public void canceled() {
-
+                plataforma.setScreen(new Menu(plataforma));
             }
         };
         Gdx.input.getTextInput(listener, "Columnas M1 ", "", "");
@@ -172,7 +182,7 @@ public class SumMatrices implements Screen {
             }
             @Override
             public void canceled() {
-
+                plataforma.setScreen(new Menu(plataforma));
             }
         };
         Gdx.input.getTextInput(listener2, "Filas M1 ", "", "");
@@ -198,6 +208,16 @@ public class SumMatrices implements Screen {
         btnInsertarDatos.render(batch);
         if(banderaDatos){
             multiplicacion();
+        }
+        if(resultados){
+            //resultados = false;
+            //Imprimir matriz
+            for (int x=0; x < sumaM.length; x++) {
+                for (int y = 0; y < sumaM[x].length; y++) {
+                    texto.mostrarMensaje(batch,String.valueOf(sumaM[x][y])+ "         ",(Plataforma.ANCHO_CAMARA/2)+(y*65),(Plataforma.ALTO_CAMARA/2)-(65*x));
+                }
+            }
+            System.out.println("En render");
         }
         //Imprimir matriz 1
 
@@ -253,6 +273,8 @@ public class SumMatrices implements Screen {
         if(m1creada) {
             final int dimension = fil_m1*col_m1;
             for( int x=0;x<dimension;x++){
+                //TextField.TextFieldFilter.DigitsOnlyFilter listenerN;
+
                 Input.TextInputListener listener = new Input.TextInputListener() {
                     @Override
                     public void input(String text) {
@@ -266,6 +288,7 @@ public class SumMatrices implements Screen {
                     }
                     @Override
                     public void canceled() {
+                        plataforma.setScreen(new Menu(plataforma));
                     }
                 };
                 Gdx.input.getTextInput(listener,String.valueOf(x), "", "");
@@ -318,6 +341,7 @@ public class SumMatrices implements Screen {
                     }
                     @Override
                     public void canceled() {
+                        plataforma.setScreen(new Menu(plataforma));
                     }
                 };
                 Gdx.input.getTextInput(listener,String.valueOf(x), "", "");
@@ -356,6 +380,7 @@ public class SumMatrices implements Screen {
             }
             datosCompletados1=false;
             datosCompletados2=false;
+            resultados = true;
         }
 
 
@@ -403,7 +428,7 @@ public class SumMatrices implements Screen {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if(btnInsertarDatos.contiene(x,y)){
-                if(procesamientoCompletado){
+                if(resultados){
                     plataforma.setScreen(new Menu(plataforma));
                 }
                 banderaDatos = true;

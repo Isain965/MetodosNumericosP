@@ -53,6 +53,12 @@ public class GaussSeidel implements Screen {
     boolean banderaPincheProfr=false;
     boolean banderita=false;
 
+    //Para el texto
+    private Texto texto;
+    boolean resultados = false;
+
+    boolean volver = false;
+
     /*asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss*/
     public GaussSeidel(Plataforma plataforma) {
         this.plataforma = plataforma;
@@ -76,6 +82,8 @@ public class GaussSeidel implements Screen {
 
         // Tecla BACK (Android)
         Gdx.input.setCatchBackKey(true);
+
+        texto = new Texto();
     }
 
     // Carga los recursos a través del administrador de assets
@@ -129,6 +137,11 @@ public class GaussSeidel implements Screen {
         btnInsertarDatos.render(batch);
         if(banderaDatos){
             GaussSeidelM();
+        }
+        if(resultados){
+            for (int i = 0; i < aproximaciones.size(); i++) {
+                texto.mostrarMensaje(batch,("x" + i + " = ") + aproximaciones.get(i),(Plataforma.ANCHO_CAMARA/2),(Plataforma.ALTO_CAMARA/2)-(65*i));
+            }
         }
 
         batch.end();
@@ -287,6 +300,8 @@ public class GaussSeidel implements Screen {
                     System.out.println(("x" + i + " = ") + aproximaciones.get(i));
                 }
             }
+            resultados=true;
+            volver=true;
         }
         /* Desplegamos resultados
         System.out.println("\nResultados");
@@ -329,6 +344,9 @@ public class GaussSeidel implements Screen {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if(btnInsertarDatos.contiene(x,y)){
+                if(volver){
+                    plataforma.setScreen(new Menu(plataforma));
+                }
                 banderaDatos = true;
             }
             return true;    // Indica que ya procesó el evento

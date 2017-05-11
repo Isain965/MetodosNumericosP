@@ -58,6 +58,13 @@ public class Gauss implements Screen {
     double[] x;
 
 
+    //Para el texto
+    private Texto texto;
+    boolean resultados = false;
+
+    boolean volver = false;
+
+
 
     /*asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss*/
     public Gauss(Plataforma plataforma) {
@@ -82,6 +89,8 @@ public class Gauss implements Screen {
 
         // Tecla BACK (Android)
         Gdx.input.setCatchBackKey(true);
+
+        texto = new Texto();
     }
 
     // Carga los recursos a través del administrador de assets
@@ -135,7 +144,11 @@ public class Gauss implements Screen {
         if(banderaDatos){
             eliminacionGauss();
         }
-
+        if(resultados){
+            for (int i = 0; i < numeroEcuaciones; i++) {
+                texto.mostrarMensaje(batch,("x"+i+" = ")+(x[i]),(Plataforma.ANCHO_CAMARA/2),(Plataforma.ALTO_CAMARA/2)-(65*i));
+            }
+        }
         batch.end();
 
     }
@@ -268,6 +281,8 @@ public class Gauss implements Screen {
             for (int i = 0; i < numeroEcuaciones; i++) {
                 System.out.println(("x"+i+" = ")+(x[i]));
             }
+            resultados = true;
+            volver=true;
         }
     }
     private final double EPSILON = 1e-10;
@@ -346,6 +361,9 @@ public class Gauss implements Screen {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if(btnInsertarDatos.contiene(x,y)){
+                if(volver){
+                    plataforma.setScreen(new Menu(plataforma));
+                }
                 banderaDatos = true;
             }
             return true;    // Indica que ya procesó el evento

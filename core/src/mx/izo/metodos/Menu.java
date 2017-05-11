@@ -34,6 +34,23 @@ public class Menu implements Screen {
     Texture texturaBtnSecante;
     Boton btnSecante;
 
+    Texture texturaBtnBiseccion;
+    Boton btnBiseccion;
+
+    Texture texturaBtnGauss;
+    Boton btnGauss;
+
+    Texture texturaBtnSeidel;
+    Boton btnSeidel;
+
+    Texture texturaBtnSuma;
+    Boton btnSuma;
+
+    Texture texturaBtnMult;
+    Boton btnMult;
+
+
+
 
     /*asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss*/
     public Menu(Plataforma plataforma) {
@@ -67,7 +84,12 @@ public class Menu implements Screen {
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
 
         // Texturas de los botones
-        assetManager.load("BtmOk.png", Texture.class);    // Cargar imagen
+        assetManager.load("button_biseccion.png", Texture.class);    // Cargar imagen
+        assetManager.load("button_secante.png", Texture.class);
+        assetManager.load("button_gauss-jordan.png",Texture.class);
+        assetManager.load("button_gauss-seidel.png",Texture.class);
+        assetManager.load("button_suma-de-matrices.png",Texture.class);
+        assetManager.load("button_multiplicacion-de-matrices.png",Texture.class);
 
         // Se bloquea hasta que cargue todos los recursos
         assetManager.finishLoading();
@@ -75,9 +97,31 @@ public class Menu implements Screen {
 
     private void crearObjetos() {
         AssetManager assetManager = plataforma.getAssetManager();   // Referencia al assetManager
-        texturaBtnSecante=assetManager.get("BtmOk.png");
+        texturaBtnSecante = assetManager.get("button_secante.png");
+        texturaBtnBiseccion=assetManager.get("button_biseccion.png");
+        texturaBtnGauss = assetManager.get("button_gauss-jordan.png");
+        texturaBtnSeidel = assetManager.get("button_gauss-seidel.png");
+        texturaBtnSuma = assetManager.get("button_suma-de-matrices.png");
+        texturaBtnMult = assetManager.get("button_multiplicacion-de-matrices.png");
+
         btnSecante = new Boton(texturaBtnSecante);
-        btnSecante.setPosicion(Plataforma.ANCHO_CAMARA/2,Plataforma.ALTO_CAMARA/2);
+        btnSecante.setPosicion((Plataforma.ANCHO_CAMARA/2)-150,(Plataforma.ALTO_CAMARA/2)+180);
+
+        btnBiseccion = new Boton(texturaBtnBiseccion);
+        btnBiseccion.setPosicion((Plataforma.ANCHO_CAMARA/2)-150,Plataforma.ALTO_CAMARA-90);
+
+        btnGauss = new Boton(texturaBtnGauss);
+        btnGauss.setPosicion((Plataforma.ANCHO_CAMARA/2)-150,Plataforma.ALTO_CAMARA-270);
+
+        btnSeidel = new Boton(texturaBtnSeidel);
+        btnSeidel.setPosicion((Plataforma.ANCHO_CAMARA/2)-150,Plataforma.ALTO_CAMARA-360);
+
+        btnSuma = new Boton(texturaBtnSuma);
+        btnSuma.setPosicion((Plataforma.ANCHO_CAMARA/2)-150,Plataforma.ALTO_CAMARA-450);
+
+        btnMult = new Boton(texturaBtnMult);
+        btnMult.setPosicion((Plataforma.ANCHO_CAMARA/2)-150,Plataforma.ALTO_CAMARA-540);
+
     }
 
     /*
@@ -96,7 +140,11 @@ public class Menu implements Screen {
         // Entre begin-end dibujamos nuestros objetos en pantalla
         batch.begin();
         btnSecante.render(batch);
-
+        btnBiseccion.render(batch);
+        btnGauss.render(batch);
+        btnSeidel.render(batch);
+        btnSuma.render(batch);
+        btnMult.render(batch);
         batch.end();
 
     }
@@ -172,7 +220,17 @@ public class Menu implements Screen {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if(btnSecante.contiene(x,y)){
+                plataforma.setScreen(new Secante(plataforma));
+            }else if(btnBiseccion.contiene(x,y)){
+                plataforma.setScreen(new Biseccion(plataforma));
+            }else if (btnGauss.contiene(x,y)){
+                plataforma.setScreen(new Gauss(plataforma));
+            }else if (btnSeidel.contiene(x,y)){
+                plataforma.setScreen(new GaussSeidel(plataforma));
+            }else if (btnSuma.contiene(x,y)){
                 plataforma.setScreen(new SumMatrices(plataforma));
+            }else if (btnMult.contiene(x,y)){
+                plataforma.setScreen(new MultMatrices(plataforma));
             }
             return true;    // Indica que ya procesó el evento
         }

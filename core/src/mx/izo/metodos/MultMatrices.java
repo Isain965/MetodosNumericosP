@@ -77,6 +77,10 @@ public class MultMatrices implements Screen {
 
     boolean pinchesBandera=false;
 
+    //Para el texto
+    private Texto texto;
+
+    boolean resultados=false;
 
 
 
@@ -103,6 +107,8 @@ public class MultMatrices implements Screen {
 
         // Tecla BACK (Android)
         Gdx.input.setCatchBackKey(true);
+
+        texto = new Texto();
     }
 
     // Carga los recursos a través del administrador de assets
@@ -199,6 +205,16 @@ public class MultMatrices implements Screen {
         btnInsertarDatos.render(batch);
         if(banderaDatos){
             multiplicacion();
+        }
+        if(resultados){
+            int des = 0;
+            for (int x=0; x < resultado.length; x++) {
+                for (int y = 0; y < resultado[x].length; y++) {
+                    texto.mostrarMensaje(batch,String.valueOf(resultado[x][y]),((Plataforma.ANCHO_CAMARA/4)+(des*40)) ,(Plataforma.ALTO_CAMARA/2)-(65*x));
+                    des=des+5;
+                }
+                des=0;
+            }
         }
         //Imprimir matriz 1
 
@@ -347,6 +363,7 @@ public class MultMatrices implements Screen {
         if(datosCompletados1&&datosCompletados2){
             resultado=producto(m1,m2);
             //Imprimir matriz
+            resultados=true;
             for (int x=0; x < resultado.length; x++) {
                 for (int y = 0; y < resultado[x].length; y++) {
                     Gdx.app.log(String.valueOf(resultado[x][y]), " ");
@@ -406,7 +423,7 @@ public class MultMatrices implements Screen {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if(btnInsertarDatos.contiene(x,y)){
-                if(procesamientoCompletado){
+                if(resultados){
                     plataforma.setScreen(new Menu(plataforma));
                 }
                 banderaDatos = true;

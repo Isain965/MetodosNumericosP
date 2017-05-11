@@ -61,6 +61,11 @@ public class Biseccion implements Screen {
     double x = 0;
 
 
+    //Para el texto
+    private Texto texto;
+    boolean resultados = false;
+
+
     /*asssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss*/
     public Biseccion(Plataforma plataforma) {
         this.plataforma = plataforma;
@@ -84,6 +89,8 @@ public class Biseccion implements Screen {
 
         // Tecla BACK (Android)
         Gdx.input.setCatchBackKey(true);
+
+        texto = new Texto();
     }
 
     // Carga los recursos a través del administrador de assets
@@ -124,6 +131,9 @@ public class Biseccion implements Screen {
         btnInsertarDatos.render(batch);
         if(banderaDatos){
             biseccion();
+        }
+        if(resultados){
+            texto.mostrarMensaje(batch,String.valueOf(x),(Plataforma.ANCHO_CAMARA/2),Plataforma.ALTO_CAMARA/2);
         }
 
 
@@ -284,6 +294,7 @@ public class Biseccion implements Screen {
 
             }
             procesamientoCompletado = true;
+            resultados=true;
             Gdx.app.log("La raiz es: " ,String.valueOf(x));
         }
     }
