@@ -172,7 +172,7 @@ public class Menu implements Screen {
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             transformarCoordenadas(screenX, screenY);
             if(btnSecante.contiene(x,y)){
-                plataforma.setScreen(new Gauss(plataforma));
+                plataforma.setScreen(new SumMatrices(plataforma));
             }
             return true;    // Indica que ya procesó el evento
         }
